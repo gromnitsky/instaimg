@@ -1,8 +1,9 @@
 out := _out
-pkg.name := $(shell json -e 'this.q = this.name + "-" + this.version' q < src/manifest.json)
-src := $(shell find src -type f)
+pkg.name := $(shell json -d- -a name version < src/manifest.json)
+crx := $(out)/$(pkg.name).crx
+src := $(wildcard src/*)
 
-all: $(out)/$(pkg.name).crx
+all: $(crx)
 
 $(out)/$(pkg.name).zip: $(src)
 	@mkdir -p $(dir $@)
@@ -17,5 +18,5 @@ $(pkg.key):
 
 # sf
 
-upload:
-	scp $(out)/$(pkg.name).crx gromnitsky@web.sourceforge.net:/home/user-web/gromnitsky/htdocs/js/chrome/
+upload: $(crx)
+	scp $< gromnitsky@web.sourceforge.net:/home/user-web/gromnitsky/htdocs/js/chrome/
