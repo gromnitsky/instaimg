@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "instaimg",
+    "description": "Open an instagram image in a new tab",
+    "version": "0.0.1",
+    "icons": { "128": "icon.png" },
+    "page_action": {
+	"default_icon": { "19": "icon.png" }
+    },
+    "permissions": ["https://www.instagram.com/p/*"],
+    "background": {
+	"persistent": false,
+	"scripts": ["event_page.js"]
+    },
+    "content_scripts": [{
+        "matches": ["https://www.instagram.com/p/*"],
+        "js": ["content_script.js"],
+        "run_at": "document_end"
+    }]
+}
