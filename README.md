@@ -2,16 +2,10 @@
 
 (Download the .crx file [here](http://gromnitsky.users.sourceforge.net/js/chrome/).)
 
-A tiny Chrome extension for opening a raw Instagram image/video in a
+A tiny Chrome extension for opening raw Instagram images/videos in a
 new tab.
 
-~~~
-$ wc -l src/*{js,json}
-  15 src/content_script.js
-  24 src/event_page.js
-  20 src/manifest.json
-  59 total
-~~~
+![a screen shot](https://ultraimg.com/images/2018/12/07/Pln6.png)
 
 ## Compilation
 
