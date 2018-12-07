@@ -11,7 +11,7 @@ $(out)/$(pkg.name).zip: $(src)
 
 pkg.key := $(out)/private.pem
 %.crx: %.zip $(pkg.key)
-	./zip2crx.sh $^
+	./zip2crx $^
 
 $(pkg.key):
 	openssl genrsa 2048 > $@
