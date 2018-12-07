@@ -4,16 +4,14 @@
     "description": "Open a raw instagram image/video in a new tab",
     "version": "0.0.1",
     "icons": { "128": "icon.png" },
-    "page_action": {
-	"default_icon": { "19": "icon.png" }
-    },
-    "permissions": ["https://www.instagram.com/*"],
+    "page_action": {},
+    "permissions": ["https://*.instagram.com/*"],
     "background": {
 	"persistent": false,
 	"scripts": ["event_page.js"]
     },
     "content_scripts": [{
-	"matches": ["https://www.instagram.com/*"],
+	"matches": ["https://*.instagram.com/*"],
 	"js": ["content_script.js"],
 	"run_at": "document_end"
     }]
