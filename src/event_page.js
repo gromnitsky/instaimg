@@ -4,7 +4,7 @@ chrome.pageAction.onClicked.addListener(img_open)
 function icon_activate(tabId, changeInfo, tab) {
     if (!tab.url) return
     let url = new URL(tab.url); if (!/^\/p\/./.test(url.pathname)) {
-	chrome.pageAction.hide(tab.id) // doesn't work!
+	chrome.pageAction.hide(tabId) // doesn't work!
 	return
     }
 
@@ -14,11 +14,7 @@ function icon_activate(tabId, changeInfo, tab) {
 
 function img_open(tab) {
     console.log('click', tab.url)
-    chrome.tabs.sendMessage(tab.id, "img_url", res => {
-	if (!(res && res.url)) {
-	    alert("Failed to extract the image URL")
-	    return
-	}
-	chrome.tabs.create({ url: res.url })
+    chrome.tabs.sendMessage(tab.id, "video/image", url => {
+	url ? chrome.tabs.create({ url }) : alert("Failed to extract the URL")
     })
 }
