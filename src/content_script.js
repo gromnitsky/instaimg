@@ -5,19 +5,18 @@ chrome.runtime.onMessage.addListener( (req, sender, res) => {
     res(urls())
 })
 
-function urls() { // ignores video thumbnails
-    let div = 'div:not([class])[role="button"]'
-    let r = []
-    let video_parents = {}
-    for (let tag of ['video', 'img']) {
-	document.querySelectorAll(`${div} ${tag}`)
-	    .forEach( node => {
-		if (node.src) {
-		    if (tag === 'video') video_parents[node.parentNode] = 1
-		    r.push({type: tag, src: node.src, parent: node.parentNode})
-		}
-	    })
+function urls() {
+    let links = tag => {
+	let div = 'div:not([class])[role="button"]'
+	return Array.from(document.querySelectorAll(`${div} ${tag}`))
+	    .filter( node => node.src)
+	    .map( node => ({parent: node.parentNode, href: node.src}))
     }
-    return r.filter( val => !(video_parents[val.parent] && val.type === 'img'))
-	.map( val => val.src)
+
+    let videos = links('video')
+    let images = links('img').filter( link => { // ignore video thumbnails
+	return videos.findIndex( val => val.parent === link.parent) === -1
+    })
+
+    return videos.concat(images).map( val => val.href)
 }
