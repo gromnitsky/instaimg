@@ -14,7 +14,10 @@ function icon_activate(tabId, changeInfo, tab) {
 
 function img_open(tab) {
     console.log('click', tab.url)
-    chrome.tabs.sendMessage(tab.id, "video/image", url => {
-	url ? chrome.tabs.create({ url }) : alert("Failed to extract the URL")
+    chrome.tabs.sendMessage(tab.id, "video/image", urls => {
+	if (urls.length)
+	    urls.forEach( url => chrome.tabs.create({ url }))
+	else
+	    alert("Failed to extract URLs")
     })
 }
