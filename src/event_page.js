@@ -2,7 +2,7 @@ chrome.tabs.onUpdated.addListener(icon_activate)
 chrome.pageAction.onClicked.addListener(img_open)
 
 function icon_activate(tabId, changeInfo, tab) {
-    if (!(changeInfo.status === 'complete' && tab.url)) return
+    if (!(tab.url && changeInfo.status === 'complete')) return
     let url = new URL(tab.url); if (!/^\/p\/./.test(url.pathname)) {
 	chrome.pageAction.hide(tabId) // doesn't work!
 	return
