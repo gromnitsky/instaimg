@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener( (req, sender, res) => {
 
 function urls() {
     let links = tag => {
-	let div = 'div:not([class])[role="button"]'
+	let div = 'article > div [role=button]'
 	return Array.from(document.querySelectorAll(`${div} ${tag}`))
 	    .filter( node => node.src)
 	    .map( node => ({parent: node.parentNode, href: node.src}))
