@@ -5,13 +5,12 @@ crx := $(pkg).crx
 zip := $(pkg).zip
 
 crx: $(crx)
-$(crx): private.pem $(src)
-	google-chrome --pack-extension=src --pack-extension-key=$<
-	@mkdir -p $(dir $@)
-	mv src.crx $@
+%.crx: %.zip private.pem
+	crx3-new private.pem < $< > $@
 
 zip: $(zip)
-$(zip): $(src)
+%.zip: $(src)
+	@mkdir -p $(dir $@)
 	cd $(dir $<) && zip -qr $(CURDIR)/$@ *
 
 private.pem:
