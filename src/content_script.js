@@ -6,17 +6,12 @@ chrome.runtime.onMessage.addListener( (req, sender, res) => {
 })
 
 function urls() {
-    let links = tag => {
-	let div = 'article > div [role=button]'
-	return Array.from(document.querySelectorAll(`${div} ${tag}`))
-	    .filter( node => node.src)
-	    .map( node => ({parent: node.parentNode, href: node.src}))
+    let links = query => {
+	return Array.from(document.querySelectorAll(query)).filter( v => v.src)
     }
 
-    let videos = links('video')
-    let images = links('img').filter( link => { // ignore video thumbnails
-	return videos.findIndex( val => val.parent === link.parent) === -1
-    })
+    let videos = links('article [role=button] video')
+    let images = links('article [role=button] img[srcset]')
 
-    return videos.concat(images).map( val => val.href)
+    return videos.concat(images).map( v => v.src)
 }
