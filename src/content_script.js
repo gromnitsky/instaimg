@@ -10,7 +10,7 @@ function urls() {
 	return Array.from(document.querySelectorAll(query)).filter( v => v.src)
     }
 
-    let videos = links('article [role=button] video')
+    let videos = links('article video')
     let images = links('article [role=button] img[srcset]')
 
     return videos.concat(images).map( v => v.src)
